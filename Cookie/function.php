@@ -141,43 +141,61 @@
 		return query($query);
 	}
 	
-	// REGISTRASI FUNCTION
+	
+	//REGISTER FUNCTION
 	
 	function registrasi($data) {
 		global $db;
-		$username = strtolower(stripslashes($data['username']));
-		$password = mysqli_real_escape_string($data['password']);
-		$password2 = mysqli_real_escape_string($data['password2']);
 		
-		if($password !== $password2) {
-			echo "<script>
-							alert('password tidak sama')
-						</script>";
-		} else {
-		    echo mysqli
+		$username = strtolower(stripslashes($data["username"]));
+		$password = mysqli_real_escape_string($db, $data["password"]);
+		$password2 = mysqli_real_escape_string($db, $data["password2"]);
+		
+		// Cek username sudah ada atau belum
+		$result = mysqli_query($db, "SELECT username FROM users WHERE username = '$username'");
+		
+		if(mysqli_fetch_assoc($result)) {
+		    echo "<script>
+		    				alert('username sudah ada, mohon masukkan usename yang lain 😪️')	
+		    		</script>";
+		    return false;
 		}
+		
+		if ($password !== $password2) {
+		    echo "<script>
+		    				alert('konfirmasi password tidak sesuai')	
+		    		</script>";
+		    return false;
+		}
+		//ENCRYPT
+		$password = password_hash($password, PASSWORD_DEFAULT);
+		
+		mysqli_query($db, "INSERT INTO `users` (`id`, `username`, `password`) VALUES (NULL, '$username', '$password')");
+		return mysqli_affected_rows($db);
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
