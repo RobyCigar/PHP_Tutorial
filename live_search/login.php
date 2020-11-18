@@ -19,7 +19,7 @@ if(isset($_COOKIE['id']) && isset($_COOKIE['key'])) {
 
 
 if (isset($_SESSION['login'])) {
-	header('Location: latian.php');
+	header('Location: index.php');
 	exit;
 }
 
@@ -46,7 +46,7 @@ if (isset($_SESSION['login'])) {
     				setcookie('key', hash('sha256', $row['username']));
     			}
     			//redirect
-    			header("Location: latian.php");
+    			header("Location: index.php");
     			exit;
     		} 	
     	}	else {
@@ -85,6 +85,7 @@ if (isset($_SESSION['login'])) {
     		</li>
     	</ul>
     </form>
+    <a href="login.php">wanna login?</a>
 </body>
 </html>
 
